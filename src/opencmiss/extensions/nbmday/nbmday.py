@@ -31,7 +31,6 @@ class MainNBMDay(NBMDay):
         self._sound = None
         self._sound_thread = None
         self._code_object = None
-        get_jaw_rotation(0.5)
 
     def _make_connections(self):
         self._widget.simulate.connect(self._simulate)
@@ -48,7 +47,10 @@ angle = animate_jaw(elapsed_time)
         self._code_object = compile(code_string, '<string>', 'exec')
         elapsed_time = 0.0
         angle = 0.0
-        exec(self._code_object)
+        try:
+            exec(self._code_object)
+        except Exception as e:
+            print(e)
         # projection_matrix = get_jaw_rotation(angle)
         self._scene.update_angle(angle)
         sound_file = os.path.join(os.path.dirname(__file__), 'sounds', self._current_sound)

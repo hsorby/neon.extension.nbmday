@@ -1,4 +1,7 @@
-import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 import re
 
 from PySide2 import QtWidgets, QtGui
@@ -33,8 +36,8 @@ class DockWidget(QtWidgets.QWidget):
 
     def _parse_code(self):
         code = self._ui.textEdit.toPlainText()
-        out_stream = StringIO.StringIO()
-        err_stream = StringIO.StringIO()
+        out_stream = StringIO()
+        err_stream = StringIO()
         reporter = Reporter(out_stream, err_stream)
 
         result = check(code, 'function', reporter)
@@ -126,17 +129,9 @@ class UiWidgetContainer(object):
     that are available are:
        'sin', 'cos', 'exp', 'sqrt'.
     \"\"\"
-    angle = 0.0
     # Place your code here!
-    if elapsed_time < 0.5:
-        pass
-    elif elapsed_time < 1.2:
-        angle = 0.707
-    elif elapsed_time < 2.0:
-        angle = 1.5
-    elif elapsed_time < 3.5:
-        angle = 2.8
-        
+    angle = 0.0
+
     return angle
 """)
 
